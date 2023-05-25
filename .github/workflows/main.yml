@@ -39,9 +39,9 @@ jobs:
           # tags: ${{ secrets.AWS_REGISTRY_URL }}:latest
           tags: ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
 
-  Deploy:
-    needs: Build
-    runs-on: ubuntu-latest
+  # Deploy:
+  #   needs: Build
+  #   runs-on: ubuntu-latest
       - name: Deploy to EKS
         run: kubectl apply -f ./yaml/deployment.yaml
   
