@@ -40,10 +40,6 @@ jobs:
           # tags: ${{ secrets.AWS_REGISTRY_URL }}:latest
           tags: ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
 
-  Deploy:
-    runs-on: ubuntu-latest
-
-      steps:
       - name: Deploy to EKS
         uses: appleboy/ssh-action@master
         with:
