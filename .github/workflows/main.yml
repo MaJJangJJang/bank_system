@@ -40,12 +40,10 @@ jobs:
           # tags: ${{ secrets.AWS_REGISTRY_URL }}:latest
           tags: ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
 
+  Deploy:
+    needs: Build
+    runs-on: ubuntu-latest
       - name: Deploy to EKS
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.AWS_CLUSTER_1_IP }}  
-          username: majjangjjang 
-          password: ${{ secrets.ACTION_TOKEN }}
-          script: |
+        run: |
             kubectl apply -f ./yaml/deployment.yaml
   
