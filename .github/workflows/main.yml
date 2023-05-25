@@ -31,13 +31,13 @@ jobs:
           # tags: ${{ secrets.AWS_REGISTRY_URL }}:latest
           tags: ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
 
-      - name: Cleanup
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: false
-          # tags: ${{ secrets.AWS_REGISTRY_URL }}:latest
-          tags: ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
+      # - name: Cleanup
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: .
+      #     push: false
+      #     # tags: ${{ secrets.AWS_REGISTRY_URL }}:latest
+      #     tags: ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
 
   # Deploy:
   #   needs: Build
