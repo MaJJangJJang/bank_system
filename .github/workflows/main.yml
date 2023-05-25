@@ -30,6 +30,7 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.AWS_REGISTRY_URL }}:latest
+          # tags: ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
 
       - name: Cleanup
         uses: docker/build-push-action@v2
@@ -37,6 +38,7 @@ jobs:
           context: .
           push: false
           tags: ${{ secrets.AWS_REGISTRY_URL }}:latest
+          # tags: ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
 
   # Deploy:
   #   runs-on: ubuntu-latest
@@ -50,3 +52,4 @@ jobs:
   #         password: ${{ secrets.ACTION_TOKEN }}
   #         script: |
   #           # EKS 클러스터에서 Docker 이미지 업데이트 등 배포 작업 수행
+  #
