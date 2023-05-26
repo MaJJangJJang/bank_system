@@ -17,3 +17,5 @@ spec:
         image: ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
         ports:
         - containerPort: 3000
+          #      imagePullSecrets:
+          #  - name: crypted01-ecr
