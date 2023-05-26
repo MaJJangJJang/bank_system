@@ -39,13 +39,20 @@ jobs:
           # tags: ${{ secrets.AWS_REGISTRY_URL }}:latest
           tags: ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
 
-  Deploy:
-    needs: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Kustomize
-        uses: imranismail/setup-kustomize@v1
+  # Deploy:
+  #   needs: Build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Setup Kustomize
+  #       uses: imranismail/setup-kustomize@v1
 
+  #     - name: Checkout kustomize repository
+  #       uses: actions/checkout@v2
+  #       with:
+  #         repository: $GITHUB_USERNAME/bank_system
+  #         ref: master
+  #         token: \${{ secrets.ACTION_TOKEN }}
+  #         path: k8s-manifest-repo
   #
   # Deploy:
   #   needs: Build
