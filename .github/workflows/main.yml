@@ -63,7 +63,7 @@ jobs:
 
       - name: Update Kubernetes resources
         run: |
-          cd bank_system/yaml/deploy/dev/
+          cd yaml/deploy/dev/
           echo \${{ steps.login-ecr.outputs.registry}}
           echo \${{ steps.image-info.outputs.ecr_repository }}
           echo \${{ steps.image-info.outputs.image_tag }}
