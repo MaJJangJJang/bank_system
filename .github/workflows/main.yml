@@ -49,7 +49,7 @@ jobs:
       - name: Checkout kustomize repository
         uses: actions/checkout@v2
         with:
-          repository: $GITHUB_USERNAME/bank_system
+          repository: majjangjjang/bank_system
           ref: master
           token: \${{ secrets.ACTION_TOKEN }}
           path: bank_system
