@@ -69,6 +69,7 @@ jobs:
           echo ${{ steps.image-info.outputs.ecr_repository }}
           echo ${{ steps.image-info.outputs.image_tag }}
           kustomize edit set image ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
+          cat deployment.yaml
 
 # kustomize edit set image \${{ steps.login-ecr.outputs.registry}}/\${{ steps.image-info.outputs.ecr_repository }}=\${{ steps.login-ecr.outputs.registry}}/\${{ steps.image-info.outputs.ecr_repository }}:\${{ steps.image-info.outputs.image_tag }}
 # cat kustomization.yaml
