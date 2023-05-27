@@ -43,6 +43,13 @@ jobs:
     needs: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Configure Git with Personal Access Token
+        run: |
+          git config --global credential.helper store
+          git config --global user.email "majjangjjang@github.com"
+          git config --global user.name "majjangjjang"
+          git config --global --add 'credential.helper' '!f() { echo "username=PersonalAccessToken"; echo "password=${{ secrets.ACTION_TOKEN }}"; }; f'
+
       - name: Setup Kustomize
         uses: imranismail/setup-kustomize@v1
 
