@@ -61,13 +61,11 @@ jobs:
           token: ${{ secrets.ACTION_TOKEN }}
           path: bank_system
 
-
-## 여기서부터 수정 필요
-      # - name: Update Kubernetes resources
-      #   run: |
-      #     cd bank_system/deploy/dev/
-      #     kustomize edit set image \${{ steps.login-ecr.outputs.registry}}/\${{ steps.image-info.outputs.ecr_repository }}=\${{ steps.login-ecr.outputs.registry}}/\${{ steps.image-info.outputs.ecr_repository }}:\${{ steps.image-info.outputs.image_tag }}
-      #     cat kustomization.yaml
+      - name: Update Kubernetes resources
+        run: |
+          cd bank_system/deploy/dev/
+          kustomize edit set image \${{ steps.login-ecr.outputs.registry}}/\${{ steps.image-info.outputs.ecr_repository }}=\${{ steps.login-ecr.outputs.registry}}/\${{ steps.image-info.outputs.ecr_repository }}:\${{ steps.image-info.outputs.image_tag }}
+          cat kustomization.yaml
 
   #
   # Deploy:
