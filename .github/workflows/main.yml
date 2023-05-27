@@ -63,9 +63,13 @@ jobs:
 
       - name: Update Kubernetes resources
         run: |
-          cd bank_system/deploy/dev/
-          kustomize edit set image \${{ steps.login-ecr.outputs.registry}}/\${{ steps.image-info.outputs.ecr_repository }}=\${{ steps.login-ecr.outputs.registry}}/\${{ steps.image-info.outputs.ecr_repository }}:\${{ steps.image-info.outputs.image_tag }}
-          cat kustomization.yaml
+          cd bank_system/yaml/deploy/dev/
+          echo \${{ steps.login-ecr.outputs.registry}}
+          echo \${{ steps.image-info.outputs.ecr_repository }}
+          echo \${{ steps.image-info.outputs.image_tag }}
+
+# kustomize edit set image \${{ steps.login-ecr.outputs.registry}}/\${{ steps.image-info.outputs.ecr_repository }}=\${{ steps.login-ecr.outputs.registry}}/\${{ steps.image-info.outputs.ecr_repository }}:\${{ steps.image-info.outputs.image_tag }}
+# cat kustomization.yaml
 
   #
   # Deploy:
