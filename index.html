@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DB 서버 로그인 확인</title>
+</head>
+<body>
+  <h1>DB 서버 로그인 확인</h1>
+  <form onsubmit="login(event)">
+    <input type="text" id="username" placeholder="사용자 이름" required>
+    <input type="password" id="password" placeholder="비밀번호" required>
+    <button type="submit">로그인</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    function login(event) {
+      event.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      })
+        .then(response => response.json())
+        .then(data => {
+          const resultContainer = document.getElementById('result');
+          if (data.success) {
+            resultContainer.innerText = '로그인 성공';
+          } else {
+            resultContainer.innerText = '로그인 실패';
+          }
+        })
+        .catch(error => console.error(error));
+    }
+  </script>
+</body>
+</html>
