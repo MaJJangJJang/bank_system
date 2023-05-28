@@ -6,5 +6,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log('서버가 실행 중입니다2.');
+  console.log('서버가 실행 중입니다.');
 });
