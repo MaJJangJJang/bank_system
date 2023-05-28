@@ -1,12 +1,12 @@
 {
-    "name": "backend",
+    "name": "my-app",
     "version": "1.0.0",
-    "description": "Backend application",
-    "main": "server.js",
+    "description": "Sample Application",
+    "main": "index.js",
     "scripts": {
-      "start": "node server.js"
+      "start": "node index.js"
     },
-    "author": "msw",
+    "author": "Your Name",
     "license": "MIT",
     "dependencies": {
       "express": "^4.17.1",
