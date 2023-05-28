@@ -30,6 +30,13 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      - name: Update DB Info
+        run: |
+          sed -i "s|process.env.DB_HOST|${{ secrets.DB_HOST }}|g" index.js
+          sed -i "s|process.env.DB_USER|${{ secrets.DB_USER }}|g" index.js
+          sed -i "s|process.env.DB_PASSWORD|${{ secrets.DB_PASSWORD }}|g" index.js
+          sed -i "s|process.env.DB_DATABASE|${{ secrets.DB_DATABASE }}|g" index.js
+
       - name: Get image tag(verion)
         id: image-version
         run: |
