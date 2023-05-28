@@ -1,36 +1,48 @@
 const express = require('express');
 const mysql = require('mysql');
+const bodyParser = require('body-parser');
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// MySQL 데이터베이스 연결 설정
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST, // MySQL 호스트
-  user: process.env.DB_USER, // MySQL 사용자 이름
-  password: process.env.DB_PASSWORD, // MySQL 비밀번호
-  database: process.env.DB_DATABASE // 사용할 데이터베이스 이름
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
-// 로그인 라우트 핸들러
-app.post('/login', express.json(), (req, res) => {
-  const { username, password } = req.body;
-  const query = `SELECT * FROM user WHERE username = '${username}' AND password = '${password}'`;
+connection.connect((err) => {
+  if (err) {
+    console.error('데이터베이스 연결 오류:', err);
+  } else {
+    console.log('데이터베이스에 성공적으로 연결되었습니다.');
+  }
+});
 
-  connection.query(query, (error, results) => {
-    if (error) {
-      console.error('로그인 오류:', error);
-      res.json({ success: false });
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/login.html');
+});
+
+app.post('/login', (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
+  connection.query(query, [username, password], (err, results) => {
+    if (err) {
+      console.error('쿼리 실행 오류:', err);
+      res.status(500).send('서버 오류');
     } else {
       if (results.length > 0) {
-        res.json({ success: true });
+        res.send('로그인 성공');
       } else {
-        res.json({ success: false });
+        res.send('로그인 실패');
       }
     }
   });
 });
 
-// 서버 시작
 app.listen(3000, () => {
-  console.log('서버가 3000번 port에서 실행 중입니다.');
+  console.log('웹 애플리케이션이 3000번 포트에서 실행 중입니다.');
 });

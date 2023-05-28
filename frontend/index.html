@@ -1,42 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>DB 서버 로그인 확인</title>
+  <title>Login</title>
+  <style>
+    .container {
+      max-width: 300px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .form-group {
+      margin-bottom: 10px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: bold;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 5px;
+    }
+    .form-group button {
+      padding: 5px 10px;
+    }
+  </style>
 </head>
 <body>
-  <h1>DB 서버 로그인 확인</h1>
-  <form onsubmit="login(event)">
-    <input type="text" id="username" placeholder="사용자 이름" required>
-    <input type="password" id="password" placeholder="비밀번호" required>
-    <button type="submit">로그인</button>
-  </form>
-  <div id="result"></div>
+  <div class="container">
+    <h2>Login</h2>
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div class="form-group">
+      <button id="loginButton">Login</button>
+    </div>
+  </div>
 
   <script>
-    function login(event) {
-      event.preventDefault();
-      
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+    document.getElementById('loginButton').addEventListener('click', function() {
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
 
-      fetch('/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-      })
-        .then(response => response.json())
-        .then(data => {
-          const resultContainer = document.getElementById('result');
-          if (data.success) {
-            resultContainer.innerText = '로그인 성공';
+      // 서버로 사용자 정보 전송
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/login');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          if (response.success) {
+            alert('로그인 성공');
           } else {
-            resultContainer.innerText = '로그인 실패';
+            alert('로그인 실패');
           }
-        })
-        .catch(error => console.error(error));
-    }
+        } else {
+          alert('서버 오류');
+        }
+      };
+      xhr.send(JSON.stringify({ username: username, password: password }));
+    });
   </script>
 </body>
 </html>
