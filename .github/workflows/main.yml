@@ -53,33 +53,31 @@ jobs:
           push: false
           tags: ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
 
+  Deploy:
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
 
-# image만 테스트
-#   Deploy:
-#     needs: Build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Setup Kustomize
-#         uses: imranismail/setup-kustomize@v1
+      - name: Checkout kustomize repository
+        uses: actions/checkout@v2
+        with:
+          repository: majjangjjang/bank_system_yaml
+          ref: master
+          token: ${{ secrets.ACTION_TOKEN }}
+          path: bank_system_yaml
 
-#       - name: Checkout kustomize repository
-#         uses: actions/checkout@v2
-#         with:
-#           repository: majjangjjang/bank_system_yaml
-#           ref: master
-#           token: ${{ secrets.ACTION_TOKEN }}
-#           path: bank_system_yaml
+      - name: Update Kubernetes resources
+        run: |
+          cd bank_system_yaml/overlays/deploy/
+          kustomize edit set image ${{ secrets.AWS_REGISTRY_URL }}=${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
+          cat kustomization.yaml
 
-#       - name: Update Kubernetes resources
-#         run: |
-#           cd bank_system_yaml/overlays/deploy/
-#           kustomize edit set image ${{ secrets.AWS_REGISTRY_URL }}=${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
-#           cat kustomization.yaml
-
-#       - name: Commit files
-#         run: |
-#           cd bank_system_yaml
-#           git config --global user.email "majjangjjang@github.com"
-#           git config --global user.name "majjangjjang"
-#           git commit -am "Update image tag"
-#           git push -u origin master
+      - name: Commit files
+        run: |
+          cd bank_system_yaml
+          git config --global user.email "majjangjjang@github.com"
+          git config --global user.name "majjangjjang"
+          git commit -am "Update image tag"
+          git push -u origin master
