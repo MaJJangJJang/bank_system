@@ -23,19 +23,26 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      - name: Get image tag(verion)
+        id: image
+        run: |
+          VERSION=$(echo \${{ github.sha }} | cut -c1-8)
+          echo VERSION=$VERSION
+          echo "::set-output name=version::$VERSION"
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
+          tags: ${{ secrets.AWS_REGISTRY_URL }}:$VERSION
 
       - name: Cleanup
         uses: docker/build-push-action@v2
         with:
           context: .
           push: false
-          tags: ${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
+          tags: ${{ secrets.AWS_REGISTRY_URL }}:$VERSION
 
 
 ### 실패한 workflows
