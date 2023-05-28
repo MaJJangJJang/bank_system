@@ -26,6 +26,9 @@ connection.connect((err) => {
 // Body-parser 설정
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+// Express 애플리케이션에서 정적 파일에 대한 경로 설정
+app.use(express.static('public'));
+
 
 // 로그인 API 엔드포인트
 app.post('/', (req, res) => {
