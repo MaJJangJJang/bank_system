@@ -32,5 +32,5 @@ app.post('/login', express.json(), (req, res) => {
 
 // 서버 시작
 app.listen(3000, () => {
-  console.log('서버가 http://localhost:3000/ 에서 실행 중입니다.');
+  console.log('서버가 3000번 port에서 실행 중입니다.');
 });

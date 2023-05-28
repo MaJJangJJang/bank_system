@@ -1,18 +1,24 @@
-# Node.js 이미지 사용
-FROM node:14
+# Frontend 빌드 단계
+FROM node:14 as frontend
 
-# 앱 디렉토리 생성
 WORKDIR /app
 
-# 앱 종속성 설치
-COPY package*.json ./
+COPY frontend/package*.json ./
 RUN npm install
 
-# 앱 소스 코드 복사
-COPY . .
+COPY frontend .
 
-# 포트 노출
+# Backend 빌드 단계
+FROM node:14 as backend
+
+WORKDIR /app
+
+COPY backend/package*.json ./
+RUN npm install
+
+COPY backend .
+
+# 포트 노출 및 실행
 EXPOSE 3000
 
-# 컨테이너 시작 시 실행할 명령
-CMD ["node", "server.js"]
+CMD ["npm", "start"]
