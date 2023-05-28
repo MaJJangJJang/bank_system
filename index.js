@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // 로그인 API 엔드포인트
-app.post('/login', (req, res) => {
+app.post('/', (req, res) => {
   const { username, password } = req.body;
 
   // DB에서 유저 정보 조회
