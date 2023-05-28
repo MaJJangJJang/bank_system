@@ -61,7 +61,7 @@ jobs:
 
       - name: Update Kubernetes resources
         run: |
-          cd bank_system_yaml/overlays/dev/
+          cd bank_system_yaml/overlays/deploy/
           kustomize edit set image ${{ secrets.AWS_REGISTRY_URL }}=${{ secrets.AWS_REGISTRY_URL }}:${{ github.sha }}
           cat kustomization.yaml
 
