@@ -25,7 +25,7 @@
         const username = formData.get('username');
         const password = formData.get('password');
 
-        fetch('/login', {
+        fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password }),
