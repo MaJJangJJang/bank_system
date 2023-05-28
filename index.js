@@ -35,7 +35,7 @@ app.post('/', (req, res) => {
   const { username, password } = req.body;
 
   // DB에서 유저 정보 조회
-  const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
+  const query = `SELECT * FROM user WHERE username = '${username}' AND password = '${password}'`;
   connection.query(query, (err, results) => {
     if (err) {
       console.error('쿼리 실행 실패:', err);
